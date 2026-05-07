@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-surface: #f8fafc;
+  --color-surface-raised: #ffffff;
+  --color-border: #e2e8f0;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-toolbar: #f1f5f9;
+  --color-sidebar: #f8fafc;
+  --color-status: #f1f5f9;
+  --color-accent: #2563eb;
+  --color-danger: #dc2626;
+  --color-warning: #f59e0b;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.pdf-page {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  margin: 0 auto 16px;
+  position: relative;
+}
+
+.canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+}
+
+.annotation-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.annotation-layer.interactive {
+  pointer-events: auto;
+}
+
+.thumbnail {
+  transition: all 0.15s ease;
+}
+.thumbnail:hover {
+  background: #e2e8f0;
+}
+.thumbnail.active {
+  background: #bfdbfe;
+  border-color: var(--color-primary);
+}
+
+.tool-btn {
+  @apply p-2 rounded-md transition-colors hover:bg-slate-200 active:bg-slate-300;
+}
+.tool-btn.active {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+input[type="color"] {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+}
+input[type="range"] {
+  width: 80px;
+}

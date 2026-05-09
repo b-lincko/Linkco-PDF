@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Bold, Italic } from 'lucide-react';
 import { Tool } from '@/types';
 import { DEFAULT_COLORS, HIGHLIGHT_COLORS, FONT_FAMILIES, STROKE_WIDTHS, FONT_SIZES } from '@/lib/constants';

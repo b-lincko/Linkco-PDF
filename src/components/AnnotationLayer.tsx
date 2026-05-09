@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { Tool, Annotation, Point, TextAnnotation, PenAnnotation, ShapeAnnotation, StickyNoteAnnotation, ImageAnnotation, SignatureAnnotation } from '@/types';
 
 interface AnnotationLayerProps {
@@ -98,20 +98,20 @@ export default function AnnotationLayer({
         points: currentPoints,
         x: 0, y: 0, width: 0, height: 0,
       } as SignatureAnnotation);
-    } else if (tool === 'rectangle' && tempAnnotation?.width > 5) {
+    } else if (tool === 'rectangle' && !!tempAnnotation && typeof tempAnnotation.width === 'number' && tempAnnotation.width > 5) {
       onAddAnnotation({
         ...base,
         type: 'rectangle',
-        x: tempAnnotation.x!, y: tempAnnotation.y!,
-        width: tempAnnotation.width!, height: tempAnnotation.height!,
+        x: tempAnnotation?.x || 0, y: tempAnnotation?.y || 0,
+        width: tempAnnotation?.width || 0, height: tempAnnotation?.height || 0,
         fillColor: undefined,
       } as ShapeAnnotation);
-    } else if (tool === 'ellipse' && tempAnnotation?.width > 5) {
+    } else if (tool === 'ellipse' && !!tempAnnotation && typeof tempAnnotation.width === 'number' && tempAnnotation.width > 5) {
       onAddAnnotation({
         ...base,
         type: 'ellipse',
-        x: tempAnnotation.x!, y: tempAnnotation.y!,
-        width: tempAnnotation.width!, height: tempAnnotation.height!,
+        x: tempAnnotation?.x || 0, y: tempAnnotation?.y || 0,
+        width: tempAnnotation?.width || 0, height: tempAnnotation?.height || 0,
         fillColor: undefined,
       } as ShapeAnnotation);
     } else if (tool === 'text') {

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { ArrowUp, ArrowDown, RotateCw, Copy, Trash2, Plus } from 'lucide-react';
 import { PDFDocument } from '@/types';
 

@@ -20,8 +20,4 @@ const api: IElectronAPI = {
 
 contextBridge.exposeInMainWorld('electronAPI', api);
 
-declare global {
-  interface Window {
-    electronAPI: IElectronAPI;
-  }
-}
+// Global type declaration must be in a separate .d.ts file or at the bottom

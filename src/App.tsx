@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Tool } from './types';
 import { DEFAULT_APP_STATE } from './lib/constants';
 import { usePDF } from './hooks/usePDF';

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  FileOpen, Save, SaveAs, Search, ZoomIn, ZoomOut,
+  FileText, Save, SaveAll, Search, ZoomIn, ZoomOut,
   ArrowLeft, ArrowRight, RotateCcw, Delete,
   Hand, MousePointer, Type, Highlighter, Underline, Strikethrough,
   MessageSquare, PenTool, Square, Circle, ArrowUpRight, Image,
@@ -68,7 +68,7 @@ export default function Toolbar({
       {/* File */}
       <div className="flex items-center gap-1 pr-2 border-r border-border">
         <button onClick={onOpen} className="tool-btn" title="Open (Ctrl+O)">
-          <FileOpen size={18} />
+          <FileText size={18} />
         </button>
         {doc && (
           <>
@@ -76,7 +76,7 @@ export default function Toolbar({
               <Save size={18} className={modified ? 'text-warning' : ''} />
             </button>
             <button onClick={onSaveAs} className="tool-btn" title="Save As">
-              <SaveAs size={18} />
+              <SaveAll size={18} />
             </button>
           </>
         )}

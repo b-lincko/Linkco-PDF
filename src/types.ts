@@ -174,3 +174,16 @@ export interface AppState {
   searchResults: SearchResult[];
   currentSearchIndex: number;
 }
+
+declare global {
+  interface Window {
+    electronAPI?: {
+      openPDF: () => Promise<{ canceled: boolean; filePath?: string; fileName?: string; data?: number[] }>;
+      savePDF: (data: number[], filePath?: string) => Promise<{ canceled: boolean; filePath?: string }>;
+      saveAsPDF: (data: number[]) => Promise<{ canceled: boolean; filePath?: string }>;
+      exportAs: (data: number[], format: string) => Promise<{ canceled: boolean; filePath?: string }>;
+      getVersion: () => Promise<string>;
+      openExternal: (url: string) => Promise<void>;
+    };
+  }
+}

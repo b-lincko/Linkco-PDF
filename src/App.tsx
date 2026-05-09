@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Tool } from './types';
 import { DEFAULT_APP_STATE } from './lib/constants';
 import { usePDF } from './hooks/usePDF';
@@ -6,6 +6,7 @@ import Toolbar from './components/Toolbar';
 import Sidebar from './components/Sidebar';
 import PDFViewer from './components/PDFViewer';
 import PropertiesPanel from './components/PropertiesPanel';
+import PageManager from './components/PageManager';
 import StatusBar from './components/StatusBar';
 
 export default function App() {
@@ -82,6 +83,35 @@ export default function App() {
     }
   }, [pdf]);
 
+  const handleExport = useCallback(async (format: string) => {
+    if (!pdf.doc || !window.electronAPI) return;
+    const bytes = await pdf.savePDF();
+    if (!bytes) return;
+    const arr = Array.from(bytes);
+    await window.electronAPI.exportAs(arr, format);
+  }, [pdf]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        switch (e.key) {
+          case 'o':
+            e.preventDefault();
+            handleOpen();
+            break;
+          case 's':
+            e.preventDefault();
+            if (e.shiftKey) handleSaveAs();
+            else handleSave();
+            break;
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleOpen, handleSave, handleSaveAs]);
+
   return (
     <div className="h-screen flex flex-col bg-surface text-text select-none">
       <Toolbar
@@ -157,6 +187,16 @@ export default function App() {
           />
         )}
       </div>
+      {pdf.doc && (
+        <PageManager
+          doc={pdf.doc}
+          currentPage={pdf.currentPage}
+          onRotatePage={pdf.rotatePage}
+          onDeletePage={pdf.deletePage}
+          onDuplicatePage={pdf.duplicatePage}
+          onInsertPage={pdf.insertBlankPage}
+        />
+      )}
       <StatusBar
         fileName={pdf.doc?.fileName || 'No document'}
         currentPage={pdf.currentPage}

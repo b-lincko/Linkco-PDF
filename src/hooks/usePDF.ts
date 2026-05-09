@@ -115,6 +115,22 @@ export function usePDF() {
     setModified(true);
   }, []);
 
+  const insertBlankPage = useCallback((pageIndex: number) => {
+    if (!pdfLibDocRef.current) return;
+    const insertAt = pageIndex + 1;
+    pdfLibDocRef.current.insertPage(insertAt, [612, 792]);
+    setDoc(prev => {
+      if (!prev) return prev;
+      const newPages = [
+        ...prev.pages.slice(0, insertAt),
+        { index: insertAt, width: 612, height: 792, originalWidth: 612, originalHeight: 792, rotation: 0, scale: 1 },
+        ...prev.pages.slice(insertAt).map(p => ({ ...p, index: p.index + 1 })),
+      ];
+      return { ...prev, numPages: newPages.length, pages: newPages };
+    });
+    setModified(true);
+  }, []);
+
   const addAnnotation = useCallback((annotation: Annotation) => {
     setAnnotations(prev => [...prev, annotation]);
     setModified(true);
@@ -157,6 +173,7 @@ export function usePDF() {
     rotatePage,
     deletePage,
     duplicatePage,
+    insertBlankPage,
     addAnnotation,
     updateAnnotation,
     deleteAnnotation,
